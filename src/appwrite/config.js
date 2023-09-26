@@ -1,6 +1,7 @@
+/* eslint-disable no-unreachable */
 import conf from "../conf/conf";
 
-import { Client, Account, ID, Databases } from "appwrite";
+import { Client, Account, ID, Databases, Query } from "appwrite";
 
 export class Service {
   client = new Client();
@@ -63,6 +64,58 @@ export class Service {
       console.log("Appwrite service :: deletePost :: error", error);
       return false;
     }
+  }
+
+  async getPost(slug) {
+    try {
+      return await this.databases.getDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug
+      );
+    } catch (error) {
+      console.log("Appwrite service :: getPost :: error", error);
+    }
+  }
+
+  async getPosts(queries = [Query.equal("status", "active")]) {
+    try {
+      return await this.databases.listDocuments(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        queries
+      );
+    } catch (error) {
+      console.log("Appwrite service :: getPosts :: error", error);
+      return false;
+    }
+  }
+
+  // file upload services
+  async uploadFile(file) {
+    try {
+      return await this.bucket.createFile(
+        conf.appwriteBucketId,
+        ID.unique(),
+        file
+      );
+    } catch (error) {
+      console.log("Appwrite service :: uploadFile :: error", error);
+      return false;
+    }
+  }
+
+  async deleteFile(fileId) {
+    try {
+      return await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
+    } catch (error) {
+      console.log("Appwrite service :: deleteFile :: error", error);
+      return false;
+    }
+  }
+
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
 
