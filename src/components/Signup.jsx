@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Logo from "./Logo";
 import Input from "./Input";
 import Button from "./Button";
+import { useState } from "react";
 
 function Signup() {
   const navigate = useNavigate();
