@@ -3,5 +3,7 @@ import Footer from "./Footer/Footer";
 import Cont from "./container/Cont";
 import Logo from "./Logo";
 import LogOutBtn from "./Header/LogOutBtn";
+import RTE from "./RTE";
+import Select from "./Select";
 
-export { Header, Footer, Cont, Logo, LogOutBtn };
+export { Header, Footer, Cont, Logo, LogOutBtn, RTE, Select };
