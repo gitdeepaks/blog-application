@@ -1,7 +1,5 @@
-/* eslint-disable no-unreachable */
 import conf from "../conf/conf";
-
-import { Client, Account, ID, Databases, Query } from "appwrite";
+import { Client, Account, ID, Databases, Query, Storage } from "appwrite";
 
 export class Service {
   client = new Client();
