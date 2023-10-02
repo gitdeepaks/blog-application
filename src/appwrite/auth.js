@@ -1,6 +1,4 @@
-/* eslint-disable no-useless-catch */
 import conf from "../conf/conf";
-
 import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
@@ -13,7 +11,8 @@ export class AuthService {
       .setProject(conf.appwriteProjectId);
     this.account = new Account(this.client);
   }
-  async crateAccount({ email, password, name }) {
+
+  async createAccount({ email, password, name }) {
     try {
       const userAccount = await this.account.create(
         ID.unique(),
@@ -22,7 +21,7 @@ export class AuthService {
         name
       );
       if (userAccount) {
-        //   call another mothode
+        // call another method
         return this.login({ email, password });
       } else {
         return userAccount;
@@ -44,18 +43,21 @@ export class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      throw error;
+      console.log("Appwrite serive :: getCurrentUser :: error", error);
     }
+
+    return null;
   }
 
   async logout() {
     try {
-      return await this.account.deleteSessions("current");
+      await this.account.deleteSessions();
     } catch (error) {
-      throw error;
+      console.log("Appwrite serive :: logout :: error", error);
     }
   }
 }
+
 const authService = new AuthService();
 
 export default authService;
